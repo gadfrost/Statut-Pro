@@ -1,38 +1,95 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- Tout le <head> reste identique, avec les liens vers le manifest, les polices, etc. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Statut Pro RDC 🇨🇩 - Créez des statuts uniques</title>
-
-    <!-- Liens pour la PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#075E54">
     <link rel="apple-touch-icon" href="icon-512.png">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Lobster&family=Pacifico&family=Roboto:wght@900&family=Caveat:wght@700&family=Oswald:wght@700&family=Anton&family=Bebas+Neue&display=swap" rel="stylesheet">
 
     <style>
-        /* ... (Tout le CSS de la version précédente reste ici, pas besoin de le changer) ... */
-        :root{--primary-color:#075E54;--secondary-color:#128C7E;--accent-color:#25D366;--light-grey:#f0f2f5;--white:#ffffff;--dark-text:#333;--shadow:0 8px 25px rgba(0,0,0,0.1)}body{font-family:'Poppins',sans-serif;background-color:var(--light-grey);margin:0;padding:0}.main-container{display:flex;flex-direction:column;gap:20px;width:100%;max-width:1200px;margin:0 auto;padding:15px;box-sizing:border-box}.editor-panel,.preview-panel{background:var(--white);padding:20px;border-radius:20px;box-shadow:var(--shadow);width:100%;box-sizing:border-box}h1,h2{text-align:center}h1{color:var(--primary-color);font-size:22px;margin-bottom:15px}h2{font-size:20px;margin-top:0}#canvas-box{width:100%;aspect-ratio:1 / 1;margin:0 auto 20px;position:relative;background-color:#000;background-image:url(https://images.unsplash.com/photo-1554141323-c35a12545119?q=80&w=800&auto=format&fit=crop);display:flex;align-items:center;justify-content:center;border-radius:15px;overflow:hidden;background-size:cover;background-position:center;transition:background-image .3s ease}#text-preview{color:#fff;font-weight:700;font-size:28px;text-shadow:2px 2px 6px rgba(0,0,0,.7);padding:20px;margin:0;pointer-events:none;font-family:'Roboto',sans-serif;line-height:1.3;text-align:center}.watermark{position:absolute;bottom:10px;right:10px;font-size:12px;font-weight:700;color:rgba(255,255,255,.6);text-shadow:1px 1px 2px rgba(0,0,0,.5)}.control-group{margin-bottom:25px}.control-group h3{margin-top:0;margin-bottom:15px;color:var(--dark-text);border-bottom:2px solid var(--light-grey);padding-bottom:10px;font-size:16px}textarea{width:100%;padding:15px;border-radius:10px;border:1px solid #ddd;box-sizing:border-box;font-size:16px;height:100px;resize:vertical}.background-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:10px}.thumb{width:100%;height:70px;border-radius:10px;cursor:pointer;background-size:cover;background-position:center;transition:transform .2s ease,box-shadow .2s ease;border:2px solid transparent}.thumb:hover{transform:scale(1.05)}.thumb.active{border-color:var(--accent-color)}.btn-upload{background:#34b7f1;color:#fff;padding:12px;border-radius:10px;display:block;margin-top:15px;cursor:pointer;font-weight:700;text-align:center}select,input[type=color],input[type=range]{padding:10px;border-radius:8px;border:1px solid #ddd;font-size:16px;cursor:pointer;width:100%;box-sizing:border-box}.font-controls,.color-controls,.size-controls{display:flex;flex-direction:column;gap:10px}input[type=color]{height:50px}#font-size-label{font-weight:700;text-align:center}.action-buttons{display:flex;flex-direction:column;gap:15px}.btn{border:none;padding:16px;width:100%;border-radius:12px;font-weight:700;cursor:pointer;font-size:16px;transition:transform .2s ease,background-color .2s ease;display:flex;justify-content:center;align-items:center;gap:10px}.btn:active{transform:scale(.98)}.btn-download{background:var(--secondary-color);color:#fff}.btn-download:hover{background:var(--primary-color)}.btn-whatsapp{background:var(--accent-color);color:var(--white)}.btn-whatsapp:hover{background:#1ebe57}@media (min-width:900px){body{padding:20px}.main-container{flex-direction:row;align-items:flex-start;gap:30px}.preview-panel{width:400px;position:sticky;top:20px}.editor-panel{flex-grow:1}.font-controls,.color-controls,.size-controls{flex-direction:row;align-items:center;gap:15px}select{width:auto;flex-grow:1}input[type=color]{width:50px}input[type=range]{width:auto;flex-grow:1}}
+        /* Tout le CSS précédent reste identique. J'ajoute juste le style pour le nouveau bouton */
+        :root{--primary-color:#075E54;--secondary-color:#128C7E;--accent-color:#25D366;--light-grey:#f0f2f5;--white:#ffffff;--dark-text:#333;--shadow:0 8px 25px rgba(0,0,0,0.1)}body{font-family:'Poppins',sans-serif;background-color:var(--light-grey);margin:0;padding:0}.main-container{display:flex;flex-direction:column;gap:20px;width:100%;max-width:1200px;margin:0 auto;padding:15px;box-sizing:border-box}.editor-panel,.preview-panel{background:var(--white);padding:20px;border-radius:20px;box-shadow:var(--shadow);width:100%;box-sizing:border-box}h1,h2{text-align:center}h1{color:var(--primary-color);font-size:22px;margin-bottom:15px}h2{font-size:20px;margin-top:0}#canvas-box{width:100%;aspect-ratio:1 / 1;margin:0 auto 20px;position:relative;background-color:#000;background-image:url(https://images.unsplash.com/photo-1554141323-c35a12545119?q=80&w=800&auto=format&fit=crop);display:flex;align-items:center;justify-content:center;border-radius:15px;overflow:hidden;background-size:cover;background-position:center;transition:background-image .3s ease}#text-preview{color:#fff;font-weight:700;font-size:28px;text-shadow:2px 2px 6px rgba(0,0,0,.7);padding:20px;margin:0;pointer-events:none;font-family:'Roboto',sans-serif;line-height:1.3;text-align:center}.watermark{position:absolute;bottom:10px;right:10px;font-size:12px;font-weight:700;color:rgba(255,255,255,.6);text-shadow:1px 1px 2px rgba(0,0,0,.5)}.control-group{margin-bottom:25px}.control-group h3{margin-top:0;margin-bottom:15px;color:var(--dark-text);border-bottom:2px solid var(--light-grey);padding-bottom:10px;font-size:16px}textarea{width:100%;padding:15px;border-radius:10px;border:1px solid #ddd;box-sizing:border-box;font-size:16px;height:100px;resize:vertical}.background-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:10px}.thumb{width:100%;height:70px;border-radius:10px;cursor:pointer;background-size:cover;background-position:center;transition:transform .2s ease,box-shadow .2s ease;border:2px solid transparent}.thumb:hover{transform:scale(1.05)}.thumb.active{border-color:var(--accent-color)}.btn-upload{background:#34b7f1;color:#fff;padding:12px;border-radius:10px;display:block;margin-top:15px;cursor:pointer;font-weight:700;text-align:center}select,input[type=color],input[type=range]{padding:10px;border-radius:8px;border:1px solid #ddd;font-size:16px;cursor:pointer;width:100%;box-sizing:border-box}.font-controls,.color-controls,.size-controls{display:flex;flex-direction:column;gap:10px}input[type=color]{height:50px}#font-size-label{font-weight:700;text-align:center}.action-buttons{display:flex;flex-direction:column;gap:15px}.btn{border:none;padding:16px;width:100%;border-radius:12px;font-weight:700;cursor:pointer;font-size:16px;transition:transform .2s ease,background-color .2s ease;display:flex;justify-content:center;align-items:center;gap:10px}.btn:active{transform:scale(.98)}.btn-download{background:var(--secondary-color);color:#fff}.btn-download:hover{background:var(--primary-color)}.btn-whatsapp{background:var(--accent-color);color:var(--white)}.btn-whatsapp:hover{background:#1ebe57}
+        
+        /* STYLE POUR LE NOUVEAU BOUTON */
+        .btn-install {
+            background-color: #8E44AD; /* Une couleur violette pour le différencier */
+            color: white;
+            display: none; /* Caché par défaut */
+        }
+        .btn-install:hover {
+            background-color: #7B249C;
+        }
+
+        @media (min-width:900px){body{padding:20px}.main-container{flex-direction:row;align-items:flex-start;gap:30px}.preview-panel{width:400px;position:sticky;top:20px}.editor-panel{flex-grow:1}.font-controls,.color-controls,.size-controls{flex-direction:row;align-items:center;gap:15px}select{width:auto;flex-grow:1}input[type=color]{width:50px}input[type=range]{width:auto;flex-grow:1}}
     </style>
 </head>
 <body>
 
-    <!-- Le HTML du body reste exactement le même que la version précédente -->
     <div class="main-container">
-        <div class="preview-panel"><h1>Statut Pro RDC 🇨🇩</h1><div id="canvas-box"><p id="text-preview">Votre message ici...</p><span class="watermark">StatutPro.cd</span></div><div class="action-buttons"><button class="btn btn-download" onclick="takeShot('download')"><i class="fas fa-download"></i> Télécharger l'image</button><button class="btn btn-whatsapp" onclick="takeShot('share')"><i class="fab fa-whatsapp"></i> Partager sur Statut WhatsApp</button></div></div>
+        <div class="preview-panel">
+            <h1>Statut Pro RDC 🇨🇩</h1>
+            <div id="canvas-box">
+                <p id="text-preview">Votre message ici...</p>
+                <span class="watermark">StatutPro.cd</span>
+            </div>
+            <div class="action-buttons">
+                <!-- LE NOUVEAU BOUTON EST AJOUTÉ ICI -->
+                <button class="btn btn-install" id="install-button">
+                    <i class="fas fa-mobile-alt"></i> Installer l'application
+                </button>
+                <button class="btn btn-download" onclick="takeShot('download')"><i class="fas fa-download"></i> Télécharger l'image</button>
+                <button class="btn btn-whatsapp" onclick="takeShot('share')"><i class="fab fa-whatsapp"></i> Partager sur Statut WhatsApp</button>
+            </div>
+        </div>
+        
+        <!-- Le reste du HTML est identique -->
         <div class="editor-panel"><h2><i class="fas fa-paint-brush"></i> Panneau de Création</h2><div class="control-group"><h3><i class="fas fa-image"></i> 1. Choisissez un fond</h3><div class="background-gallery" id="gallery"></div><label class="btn-upload"><i class="fas fa-upload"></i> Ou choisir une photo de ma galerie<input type="file" hidden accept="image/*" onchange="previewImage(event)"></label></div><div class="control-group"><h3><i class="fas fa-keyboard"></i> 2. Écrivez votre texte</h3><textarea id="input-text" placeholder="Écrivez votre message ici..." oninput="updateText()"></textarea></div><div class="control-group"><h3><i class="fas fa-palette"></i> 3. Personnalisez le style</h3><div class="font-controls"><label for="font-select">Police :</label><select id="font-select" onchange="updateStyle()"><option value="'Roboto', sans-serif" style="font-family:'Roboto',sans-serif">Moderne</option><option value="'Poppins', sans-serif" style="font-family:'Poppins',sans-serif">Simple</option><option value="'Lobster', cursive" style="font-family:'Lobster',cursive">Élégante</option><option value="'Pacifico', cursive" style="font-family:'Pacifico',cursive">Manuscrite</option><option value="'Caveat', cursive" style="font-family:'Caveat',cursive">Cahier</option><option value="'Oswald', sans-serif" style="font-family:'Oswald',sans-serif">Serré</option><option value="'Anton', sans-serif" style="font-family:'Anton',sans-serif">Impact</option><option value="'Bebas Neue', sans-serif" style="font-family:'Bebas Neue',sans-serif">Titre</option></select></div><br><div class="color-controls"><label for="text-color">Couleur :</label><input type="color" id="text-color" value="#FFFFFF" oninput="updateStyle()"></div><br><div class="size-controls"><label for="font-size">Taille :</label><input type="range" id="font-size" min="14" max="70" value="28" oninput="updateStyle()"><span id="font-size-label">28</span></div></div></div>
     </div>
 
 <script>
-    // --- Enregistrement du Service Worker ---
+    // --- NOUVEAU CODE POUR LE BOUTON D'INSTALLATION ---
+    let deferredPrompt;
+    const installButton = document.getElementById('install-button');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Empêche Chrome d'afficher sa propre bannière
+        e.preventDefault();
+        // Stocke l'événement pour pouvoir le déclencher plus tard
+        deferredPrompt = e;
+        // Affiche notre bouton personnalisé
+        installButton.style.display = 'flex';
+    });
+
+    installButton.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            // Déclenche la demande d'installation
+            deferredPrompt.prompt();
+            // Attend le choix de l'utilisateur
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            // On ne peut utiliser l'événement qu'une seule fois
+            deferredPrompt = null;
+            // Cache le bouton après la tentative
+            installButton.style.display = 'none';
+        }
+    });
+
+    window.addEventListener('appinstalled', () => {
+        // Cache le bouton si l'application est installée par un autre moyen
+        installButton.style.display = 'none';
+        deferredPrompt = null;
+        console.log('PWA was installed');
+    });
+
+    // --- Enregistrement du Service Worker (identique) ---
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register('/Statut-Pro/sw.js').then(function(registration) {
