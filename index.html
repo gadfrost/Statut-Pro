@@ -3,63 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Statut Pro RDC 🇨🇩</title>
+    <title>Statut Pro RDC 🇨🇩 - Créez des statuts uniques</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- On ajoute une bibliothèque d'icônes pour les boutons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; text-align: center; margin: 0; padding: 20px; }
-        .app { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        h1 { color: #075E54; font-size: 22px; }
-        #canvas-box { 
-            width: 300px; height: 300px; margin: 20px auto; position: relative;
-            background: #25D366; display: flex; align-items: center; justify-content: center;
-            border-radius: 15px; overflow: hidden; background-size: cover; background-position: center;
+        /* Polices depuis Google Fonts pour un design plus riche */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Lobster&family=Pacifico&family=Roboto:wght@900&display=swap');
+
+        :root {
+            --primary-color: #075E54;
+            --secondary-color: #128C7E;
+            --accent-color: #25D366;
+            --light-grey: #f0f2f5;
+            --white: #ffffff;
+            --dark-text: #333;
+            --shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
-        #text-preview { color: white; font-weight: bold; font-size: 22px; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); padding: 15px; margin: 0; pointer-events: none; }
-        input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-size: 16px; }
-        .btn-download { background: #128C7E; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; }
-        .btn-upload { background: #34B7F1; color: white; padding: 10px; border-radius: 10px; display: block; margin: 10px 0; cursor: pointer; font-weight: bold; }
-        .watermark { position: absolute; bottom: 8px; right: 8px; font-size: 10px; color: rgba(255,255,255,0.5); }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-grey);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            max-width: 1200px;
+        }
+
+        .editor-panel, .preview-panel {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .preview-panel {
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #canvas-box {
+            width: 350px;
+            height: 350px;
+            margin: 0 auto 20px;
+            position: relative;
+            background-color: #000;
+            background-image: url('https://images.unsplash.com/photo-1554141323-c35a12545119?q=80&w=1935&auto=format&fit=crop'); /* Image par défaut */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.3s ease;
+        }
+
+        #text-preview {
+            color: white;
+            font-weight: bold;
+            font-size: 28px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+            padding: 20px;
+            margin: 0;
+            pointer-events: none;
+            font-family: 'Roboto', sans-serif; /* Police par défaut pour le texte */
+            line-height: 1.3;
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: rgba(255,255,255,0.6);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .editor-panel {
+            width: 450px;
+        }
+
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+        .control-group h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--dark-text);
+            border-bottom: 2px solid var(--light-grey);
+            padding-bottom: 10px;
+            font-size: 18px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-size: 16px;
+            height: 100px;
+            resize: vertical;
+        }
+
+        .background-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+        }
+
+        .thumb {
+            width: 100%;
+            height: 80px;
+            border-radius: 10px;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .thumb:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        
+        .thumb.active {
+            border-color: var(--accent-color);
+        }
+
+        .btn-upload {
+            background: #34B7F1;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            display: block;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .font-controls, .color-controls, .size-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        select, input[type="color"], input[type="range"] {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        input[type="color"] {
+            height: 45px;
+            width: 45px;
+            padding: 5px;
+        }
+
+        input[type="range"] {
+            flex-grow: 1;
+        }
+
+        #font-size-label {
+            font-weight: bold;
+            min-width: 25px;
+        }
+
+        .btn-download {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 18px;
+            width: 100%;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-download:hover {
+            background: var(--primary-color);
+        }
+
     </style>
 </head>
 <body>
 
-<div class="app">
-    <h1>Statut Pro RDC 🇨🇩</h1>
+<div class="main-container">
     
-    <div id="canvas-box">
-        <p id="text-preview">Ton message ici...</p>
-        <span class="watermark">StatutPro.cd</span>
+    <div class="preview-panel">
+        <h1>Statut Pro RDC 🇨🇩</h1>
+        <div id="canvas-box">
+            <p id="text-preview">Votre message ici...</p>
+            <span class="watermark">StatutPro.cd</span>
+        </div>
+        <button class="btn-download" onclick="takeShot()"><i class="fas fa-download"></i> Télécharger mon Statut</button>
     </div>
 
-    <input type="text" id="input-text" placeholder="Écris ton message ici..." oninput="updateText()">
-    
-    <label class="btn-upload">
-        📸 Choisir une photo de ma galerie
-        <input type="file" hidden accept="image/*" onchange="previewImage(event)">
-    </label>
+    <div class="editor-panel">
+        <h2><i class="fas fa-paint-brush"></i> Panneau de Création</h2>
 
-    <button class="btn-download" onclick="takeShot()">📥 Télécharger pour WhatsApp</button>
+        <div class="control-group">
+            <h3><i class="fas fa-image"></i> 1. Choisissez un fond</h3>
+            <div class="background-gallery" id="gallery">
+                <!-- Les miniatures d'images seront injectées ici par JavaScript -->
+            </div>
+            <label class="btn-upload">
+                <i class="fas fa-upload"></i> Ou choisir une photo de ma galerie
+                <input type="file" hidden accept="image/*" onchange="previewImage(event)">
+            </label>
+        </div>
+
+        <div class="control-group">
+            <h3><i class="fas fa-keyboard"></i> 2. Écrivez votre texte</h3>
+            <textarea id="input-text" placeholder="Écrivez votre message ici..." oninput="updateText()"></textarea>
+        </div>
+
+        <div class="control-group">
+            <h3><i class="fas fa-palette"></i> 3. Personnalisez le style</h3>
+            <div class="font-controls">
+                <label for="font-select">Police :</label>
+                <select id="font-select" onchange="updateStyle()">
+                    <option value="'Roboto', sans-serif" style="font-family: 'Roboto', sans-serif;">Moderne</option>
+                    <option value="'Poppins', sans-serif" style="font-family: 'Poppins', sans-serif;">Simple</option>
+                    <option value="'Lobster', cursive" style="font-family: 'Lobster', cursive;">Élégante</option>
+                    <option value="'Pacifico', cursive" style="font-family: 'Pacifico', cursive;">Manuscrite</option>
+                </select>
+            </div>
+            <br>
+            <div class="color-controls">
+                <label for="text-color">Couleur :</label>
+                <input type="color" id="text-color" value="#FFFFFF" oninput="updateStyle()">
+            </div>
+            <br>
+            <div class="size-controls">
+                <label for="font-size">Taille :</label>
+                <input type="range" id="font-size" min="14" max="60" value="28" oninput="updateStyle()">
+                <span id="font-size-label">28</span>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
+    // --- CONFIGURATION ---
+    const backgroundImages = [
+        'https://images.unsplash.com/photo-1554141323-c35a12545119?q=80&w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1500964757637-c85e8a162699?q=80&w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1588392382834-a891154bca4d?q=80&w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=800&auto=format&fit=crop'
+    ];
+
+    // --- ÉLÉMENTS DU DOM ---
+    const textPreview = document.getElementById('text-preview');
+    const canvasBox = document.getElementById('canvas-box');
+    const gallery = document.getElementById('gallery');
+
+    // --- INITIALISATION ---
+    document.addEventListener('DOMContentLoaded', function() {
+        populateGallery();
+        updateStyle(); // Appliquer les styles par défaut au chargement
+    });
+
+    function populateGallery() {
+        backgroundImages.forEach((imgUrl, index) => {
+            const thumb = document.createElement('div');
+            thumb.classList.add('thumb');
+            thumb.style.backgroundImage = `url(${imgUrl})`;
+            thumb.dataset.url = imgUrl;
+            if (index === 0) {
+                thumb.classList.add('active'); // La première image est active par défaut
+            }
+            thumb.onclick = () => {
+                canvasBox.style.backgroundImage = `url(${imgUrl})`;
+                document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+            };
+            gallery.appendChild(thumb);
+        });
+    }
+
+    // --- FONCTIONS DE MISE À JOUR ---
     function updateText() {
         const val = document.getElementById('input-text').value;
-        document.getElementById('text-preview').innerText = val || "Ton message ici...";
+        textPreview.innerText = val || "Votre message ici...";
+    }
+
+    function updateStyle() {
+        const font = document.getElementById('font-select').value;
+        const color = document.getElementById('text-color').value;
+        const size = document.getElementById('font-size').value;
+        
+        textPreview.style.fontFamily = font;
+        textPreview.style.color = color;
+        textPreview.style.fontSize = `${size}px`;
+        
+        document.getElementById('font-size-label').innerText = size;
     }
 
     function previewImage(event) {
-        const box = document.getElementById('canvas-box');
+        const file = event.target.files[0];
+        if (!file) return;
+
         const reader = new FileReader();
-        reader.onload = function() {
-            box.style.backgroundImage = `url(${reader.result})`;
-            box.style.backgroundColor = "transparent";
+        reader.onload = function(e) {
+            canvasBox.style.backgroundImage = `url(${e.target.result})`;
+            // Désélectionner les miniatures de la galerie
+            document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
         }
-        reader.readAsDataURL(event.target.files[0]);
+        reader.readAsDataURL(file);
     }
 
+    // --- FONCTION DE TÉLÉCHARGEMENT ---
     function takeShot() {
         const area = document.getElementById('canvas-box');
-        html2canvas(area, { useCORS: true, allowTaint: true }).then(canvas => {
+        // On cache temporairement le filigrane s'il est trop petit pour être bien rendu
+        const watermark = area.querySelector('.watermark');
+        watermark.style.display = 'none';
+
+        html2canvas(area, { 
+            useCORS: true, 
+            allowTaint: true,
+            backgroundColor: null, // Important pour les fonds transparents si besoin
+            scale: 2 // Augmente la résolution de l'image finale
+        }).then(canvas => {
+            watermark.style.display = 'block'; // On le réaffiche après la capture
+            
             const link = document.createElement('a');
             link.download = 'mon-statut-pro.png';
             link.href = canvas.toDataURL("image/png");
