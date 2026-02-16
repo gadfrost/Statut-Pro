@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statut Pro RDC 🇨🇩</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; text-align: center; margin: 0; padding: 20px; }
+        .app { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h1 { color: #075E54; font-size: 22px; }
+        #canvas-box { 
+            width: 300px; height: 300px; margin: 20px auto; position: relative;
+            background: #25D366; display: flex; align-items: center; justify-content: center;
+            border-radius: 15px; overflow: hidden; background-size: cover; background-position: center;
+        }
+        #text-preview { color: white; font-weight: bold; font-size: 22px; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); padding: 15px; margin: 0; pointer-events: none; }
+        input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-size: 16px; }
+        .btn-download { background: #128C7E; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .btn-upload { background: #34B7F1; color: white; padding: 10px; border-radius: 10px; display: block; margin: 10px 0; cursor: pointer; font-weight: bold; }
+        .watermark { position: absolute; bottom: 8px; right: 8px; font-size: 10px; color: rgba(255,255,255,0.5); }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <h1>Statut Pro RDC 🇨🇩</h1>
+    
+    <div id="canvas-box">
+        <p id="text-preview">Ton message ici...</p>
+        <span class="watermark">StatutPro.cd</span>
+    </div>
+
+    <input type="text" id="input-text" placeholder="Écris ton message ici..." oninput="updateText()">
+    
+    <label class="btn-upload">
+        📸 Choisir une photo de ma galerie
+        <input type="file" hidden accept="image/*" onchange="previewImage(event)">
+    </label>
+
+    <button class="btn-download" onclick="takeShot()">📥 Télécharger pour WhatsApp</button>
+</div>
+
+<script>
+    function updateText() {
+        const val = document.getElementById('input-text').value;
+        document.getElementById('text-preview').innerText = val || "Ton message ici...";
+    }
+
+    function previewImage(event) {
+        const box = document.getElementById('canvas-box');
+        const reader = new FileReader();
+        reader.onload = function() {
+            box.style.backgroundImage = `url(${reader.result})`;
+            box.style.backgroundColor = "transparent";
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function takeShot() {
+        const area = document.getElementById('canvas-box');
+        html2canvas(area, { useCORS: true, allowTaint: true }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'mon-statut-pro.png';
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        });
+    }
+</script>
+
+</body>
+</html>
