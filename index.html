@@ -213,7 +213,7 @@
 
         #canvas-wrapper {
             width: 100%;
-            aspect-ratio: 1;
+            aspect-ratio: 1; /* Par défaut Carré */
             border-radius: 12px;
             overflow: hidden;
             position: relative;
@@ -223,6 +223,13 @@
             justify-content: center;
             margin-bottom: 1.5rem;
             box-shadow: inset 0 0 40px rgba(0,0,0,0.2);
+            transition: aspect-ratio 0.3s ease;
+        }
+
+        #canvas-wrapper.vertical {
+            aspect-ratio: 9 / 16;
+            max-height: 70vh;
+            margin: 0 auto 1.5rem;
         }
 
         #canvas-bg {
@@ -254,7 +261,12 @@
             word-wrap: break-word;
             max-width: 90%;
             line-height: 1.4;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 15px rgba(0,0,0,0.8); /* Ombre plus profonde pour lisibilité */
+            /* Optimisation de la netteté */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-smooth: always;
         }
 
         .watermark {
@@ -367,6 +379,15 @@
 
                 <div class="control-group">
                     <h2 class="section-title"><i class="fas fa-sliders-h"></i> 3. Style & Design</h2>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label>Format de l'image</label>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn" id="btn-square" style="flex: 1; padding: 10px; background: var(--primary); color: white;" onclick="setFormat('square')"><i class="fas fa-square"></i> Carré (Post)</button>
+                            <button class="btn" id="btn-vertical" style="flex: 1; padding: 10px; background: #f1f5f9; color: var(--text-main);" onclick="setFormat('vertical')"><i class="fas fa-mobile-alt"></i> Vertical (Statut)</button>
+                        </div>
+                    </div>
+
                     <div class="style-grid">
                         <div>
                             <label>Police</label>
@@ -489,10 +510,32 @@
         }
 
         let textAlign = 'center';
+        let currentFormat = 'square';
 
         function setTextAlign(align) {
             textAlign = align;
             updateUI();
+        }
+
+        function setFormat(format) {
+            currentFormat = format;
+            const wrapper = document.getElementById('canvas-wrapper');
+            const btnSquare = document.getElementById('btn-square');
+            const btnVertical = document.getElementById('btn-vertical');
+
+            if (format === 'vertical') {
+                wrapper.classList.add('vertical');
+                btnVertical.style.background = 'var(--primary)';
+                btnVertical.style.color = 'white';
+                btnSquare.style.background = '#f1f5f9';
+                btnSquare.style.color = 'var(--text-main)';
+            } else {
+                wrapper.classList.remove('vertical');
+                btnSquare.style.background = 'var(--primary)';
+                btnSquare.style.color = 'white';
+                btnVertical.style.background = '#f1f5f9';
+                btnVertical.style.color = 'var(--text-main)';
+            }
         }
 
         function updateUI() {
@@ -519,10 +562,24 @@
 
         async function exportImage(mode) {
             const wrapper = document.getElementById('canvas-wrapper');
+            
+            // Optimisation Ultra HD (Scale 4 + Lissage forcé)
             const canvas = await html2canvas(wrapper, {
                 useCORS: true,
-                scale: 2,
-                backgroundColor: null
+                scale: 4, 
+                backgroundColor: null,
+                logging: false,
+                imageTimeout: 0,
+                onclone: (clonedDoc) => {
+                    const clonedWrapper = clonedDoc.getElementById('canvas-wrapper');
+                    const clonedText = clonedDoc.getElementById('text-preview');
+                    
+                    // Forcer le rendu haute qualité sur le clone
+                    clonedWrapper.style.borderRadius = "0"; // Évite les bords crénelés à l'export
+                    clonedText.style.textRendering = "geometricPrecision";
+                    clonedText.style.webkitFontSmoothing = "antialiased";
+                    clonedText.style.transform = "translateZ(0)"; // Force l'accélération matérielle
+                }
             });
 
             if (mode === 'download') {
