@@ -1,73 +1,589 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Le <head> ne change pas -->
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Statut Pro RDC 🇨🇩 - Créez des statuts uniques</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#075E54"><link rel="apple-touch-icon" href="icon-512.png"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Lobster&family=Pacifico&family=Roboto:wght@900&family=Caveat:wght@700&family=Oswald:wght@700&family=Anton&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statut Pro RDC 🇨🇩 - Créateur de Statuts Professionnels</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#075E54">
+    <link rel="apple-touch-icon" href="icon-512.png">
+    
+    <!-- Bibliothèques externes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@700&family=Montserrat:wght@700&family=Dancing+Script:wght@700&family=Bebas+Neue&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Le CSS ne change pas */
-        :root{--primary-color:#075E54;--secondary-color:#128C7E;--accent-color:#25D366;--light-grey:#f0f2f5;--white:#ffffff;--dark-text:#333;--shadow:0 8px 25px rgba(0,0,0,0.1)}body{font-family:'Poppins',sans-serif;background-color:var(--light-grey);margin:0;padding:0}.main-container{display:flex;flex-direction:column;gap:20px;width:100%;max-width:1200px;margin:0 auto;padding:15px;box-sizing:border-box}.editor-panel,.preview-panel{background:var(--white);padding:20px;border-radius:20px;box-shadow:var(--shadow);width:100%;box-sizing:border-box}h1,h2{text-align:center}h1{color:var(--primary-color);font-size:22px;margin-bottom:15px}h2{font-size:20px;margin-top:0}#canvas-box{width:100%;aspect-ratio:1 / 1;margin:0 auto 20px;position:relative;background-color:#000;background-image:url(https://images.unsplash.com/photo-1554141323-c35a12545119?q=80&w=800&auto=format&fit=crop);display:flex;align-items:center;justify-content:center;border-radius:15px;overflow:hidden;background-size:cover;background-position:center;transition:background-image .3s ease}#text-preview{color:#fff;font-weight:700;font-size:28px;text-shadow:2px 2px 6px rgba(0,0,0,.7);padding:20px;margin:0;pointer-events:none;font-family:'Roboto',sans-serif;line-height:1.3;text-align:center}.watermark{position:absolute;bottom:10px;right:10px;font-size:12px;font-weight:700;color:rgba(255,255,255,.6);text-shadow:1px 1px 2px rgba(0,0,0,.5)}.control-group{margin-bottom:25px}.control-group h3{margin-top:0;margin-bottom:15px;color:var(--dark-text);border-bottom:2px solid var(--light-grey);padding-bottom:10px;font-size:16px}textarea,input[type=url]{width:100%;padding:15px;border-radius:10px;border:1px solid #ddd;box-sizing:border-box;font-size:16px;resize:vertical}textarea{height:100px}.background-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:10px}.thumb{width:100%;height:70px;border-radius:10px;cursor:pointer;background-size:cover;background-position:center;transition:transform .2s ease,box-shadow .2s ease;border:2px solid transparent}.thumb:hover{transform:scale(1.05)}.thumb.active{border-color:var(--accent-color)}.btn-upload{background:#34b7f1;color:#fff;padding:12px;border-radius:10px;display:block;margin-top:15px;cursor:pointer;font-weight:700;text-align:center}select,input[type=color],input[type=range]{padding:10px;border-radius:8px;border:1px solid #ddd;font-size:16px;cursor:pointer;width:100%;box-sizing:border-box}.font-controls,.color-controls,.size-controls{display:flex;flex-direction:column;gap:10px}input[type=color]{height:50px}#font-size-label{font-weight:700;text-align:center}.action-buttons{display:flex;flex-direction:column;gap:15px}.btn{border:none;padding:16px;width:100%;border-radius:12px;font-weight:700;cursor:pointer;font-size:16px;transition:transform .2s ease,background-color .2s ease;display:flex;justify-content:center;align-items:center;gap:10px}.btn:active{transform:scale(.98)}.btn-download{background:var(--secondary-color);color:#fff}.btn-download:hover{background:var(--primary-color)}.btn-whatsapp{background:var(--accent-color);color:var(--white)}.btn-whatsapp:hover{background:#1ebe57}
-        .btn-install{background-color:#8E44AD;color:#fff;display:none}.btn-install:hover{background-color:#7B249C}
-        @media (min-width:900px){body{padding:20px}.main-container{flex-direction:row;align-items:flex-start;gap:30px}.preview-panel{width:400px;position:sticky;top:20px}.editor-panel{flex-grow:1}.font-controls,.color-controls,.size-controls{flex-direction:row;align-items:center;gap:15px}select{width:auto;flex-grow:1}input[type=color]{width:50px}input[type=range]{width:auto;flex-grow:1}}
+        :root {
+            --primary: #075E54;
+            --primary-dark: #054c44;
+            --accent: #25D366;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --radius: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--card-bg);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+            .main-container {
+                grid-template-columns: 1fr 400px;
+                align-items: start;
+            }
+            .preview-section {
+                position: sticky;
+                top: 5rem;
+            }
+        }
+
+        /* Panneau d'édition */
+        .editor-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-dark);
+        }
+
+        .control-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        textarea, input[type="url"], select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s;
+            background: #fcfcfc;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(7, 94, 84, 0.1);
+            background: #fff;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        /* Galerie de fonds */
+        .bg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .bg-thumb {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid transparent;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .bg-thumb:hover {
+            transform: scale(1.05);
+        }
+
+        .bg-thumb.active {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.75rem;
+            background: #f1f5f9;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            transition: background 0.2s;
+        }
+
+        .upload-btn:hover {
+            background: #e2e8f0;
+        }
+
+        /* Contrôles de style */
+        .style-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            accent-color: var(--primary);
+        }
+
+        /* Aperçu */
+        .preview-card {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        #canvas-wrapper {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.2);
+        }
+
+        #canvas-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.4s ease;
+        }
+
+        #canvas-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3); /* Overlay par défaut pour lisibilité */
+        }
+
+        #text-preview {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            padding: 2rem;
+            text-align: center;
+            word-wrap: break-word;
+            max-width: 90%;
+            line-height: 1.4;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 3;
+        }
+
+        /* Boutons d'action */
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background: #1ebc57;
+            transform: translateY(-2px);
+        }
+
+        .btn-install {
+            background: #6366f1;
+            color: white;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .editor-card, .preview-card {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="preview-panel">
-            <h1>Statut Pro RDC 🇨🇩</h1>
-            <div id="canvas-box">
-                <p id="text-preview">Votre message ici...</p>
-                <span class="watermark">StatutPro.cd</span>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-install" id="install-button"><i class="fas fa-mobile-alt"></i> Installer l'application</button>
-                <button class="btn btn-download" onclick="takeShot('download')"><i class="fas fa-download"></i> Télécharger l'image</button>
-                <button class="btn btn-whatsapp" onclick="takeShot('share')"><i class="fab fa-whatsapp"></i> Partager sur Statut WhatsApp</button>
+
+    <header>
+        <h1><i class="fas fa-bolt"></i> Statut Pro RDC</h1>
+    </header>
+
+    <main class="main-container">
+        <!-- Section Édition -->
+        <div class="editor-section">
+            <div class="editor-card">
+                <div class="control-group">
+                    <h2 class="section-title"><i class="fas fa-pen-nib"></i> 1. Votre Message</h2>
+                    <textarea id="input-text" placeholder="Ex: 'Le succès n'est pas final, l'échec n'est pas fatal...'" oninput="updateUI()"></textarea>
+                    
+                    <div style="margin-top: 1rem;">
+                        <label for="input-link"><i class="fas fa-link"></i> Lien optionnel</label>
+                        <input type="url" id="input-link" placeholder="https://votre-lien.com">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h2 class="section-title"><i class="fas fa-image"></i> 2. Arrière-plan</h2>
+                    <div class="bg-grid" id="bg-gallery"></div>
+                    <label class="upload-btn">
+                        <i class="fas fa-cloud-upload-alt"></i> Utiliser ma propre photo
+                        <input type="file" hidden accept="image/*" onchange="handleCustomBg(event)">
+                    </label>
+                </div>
+
+                <div class="control-group">
+                    <h2 class="section-title"><i class="fas fa-sliders-h"></i> 3. Style & Design</h2>
+                    <div class="style-grid">
+                        <div>
+                            <label>Police</label>
+                            <select id="font-family" onchange="updateUI()">
+                                <option value="'Inter', sans-serif">Moderne (Inter)</option>
+                                <option value="'Outfit', sans-serif">Épuré (Outfit)</option>
+                                <option value="'Playfair Display', serif">Élégant (Playfair)</option>
+                                <option value="'Montserrat', sans-serif">Robuste (Montserrat)</option>
+                                <option value="'Bebas Neue', cursive">Impact (Bebas)</option>
+                                <option value="'Dancing Script', cursive">Manuscrit (Dancing)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Couleur du texte</label>
+                            <input type="color" id="text-color" value="#ffffff" oninput="updateUI()" style="height: 45px; padding: 5px;">
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <label>Taille du texte</label>
+                            <span id="size-val" style="font-size: 0.8rem; font-weight: 700;">32px</span>
+                        </div>
+                        <input type="range" id="font-size" min="16" max="80" value="32" oninput="updateUI()">
+                    </div>
+
+                    <div style="margin-top: 1rem;">
+                        <label>Opacité de l'overlay (Sombre)</label>
+                        <input type="range" id="overlay-opacity" min="0" max="80" value="30" oninput="updateUI()">
+                    </div>
+
+                    <div style="margin-top: 1rem;">
+                        <label>Alignement du texte</label>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn" style="flex: 1; padding: 8px; background: #f1f5f9;" onclick="setTextAlign('left')"><i class="fas fa-align-left"></i></button>
+                            <button class="btn" style="flex: 1; padding: 8px; background: #f1f5f9;" onclick="setTextAlign('center')"><i class="fas fa-align-center"></i></button>
+                            <button class="btn" style="flex: 1; padding: 8px; background: #f1f5f9;" onclick="setTextAlign('right')"><i class="fas fa-align-right"></i></button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="editor-panel">
-            <h2><i class="fas fa-paint-brush"></i> Panneau de Création</h2>
 
-            <!-- ================================== -->
-            <!--   CHANGEMENT DE DISPOSITION ICI    -->
-            <!-- ================================== -->
+        <!-- Section Aperçu -->
+        <div class="preview-section">
+            <div class="preview-card">
+                <div id="canvas-wrapper">
+                    <div id="canvas-bg"></div>
+                    <div id="canvas-overlay"></div>
+                    <p id="text-preview">Votre message apparaîtra ici...</p>
+                    <span class="watermark">StatutPro.cd</span>
+                </div>
 
-            <!-- 1. Le Texte et le Lien en premier -->
-            <div class="control-group">
-                <h3><i class="fas fa-keyboard"></i> 1. Écrivez votre texte</h3>
-                <textarea id="input-text" placeholder="Écrivez votre message ici..." oninput="updateText()"></textarea>
-                <br>
-                <h3><i class="fas fa-link"></i> 2. Ajoutez un lien (optionnel)</h3>
-                <input type="url" id="input-link" placeholder="Collez votre lien ici (ex: https://...)">
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="exportImage('download')">
+                        <i class="fas fa-download"></i> Télécharger l'image
+                    </button>
+                    <button class="btn btn-whatsapp" onclick="exportImage('share')">
+                        <i class="fab fa-whatsapp"></i> Partager sur WhatsApp
+                    </button>
+                    <button id="install-btn" class="btn btn-install">
+                        <i class="fas fa-mobile-alt"></i> Installer l'App
+                    </button>
+                </div>
             </div>
+        </div>
+    </main>
 
-            <!-- 2. Le choix du fond ensuite -->
-            <div class="control-group">
-                <h3><i class="fas fa-image"></i> 3. Choisissez un fond</h3>
-                <div class="background-gallery" id="gallery"></div>
-                <label class="btn-upload"><i class="fas fa-upload"></i> Ou choisir une photo de ma galerie<input type="file" hidden accept="image/*" onchange="previewImage(event)"></label>
-            </div>
+    <footer>
+        <p>&copy; 2026 Statut Pro RDC. Créé avec passion. 🇨🇩</p>
+    </footer>
+
+    <script>
+        const bgImages = [
+            "https://images.unsplash.com/photo-1554141323-c35a12545119?q=80&w=800",
+            "https://images.unsplash.com/photo-1500964757637-c85e8a162699?q=80&w=800",
+            "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800",
+            "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=800",
+            "https://images.unsplash.com/photo-1588392382834-a891154bca4d?q=80&w=800",
+            "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=800",
+            "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800",
+            "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=800"
+        ];
+
+        let currentBg = bgImages[0];
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            initGallery();
+            updateUI();
+            setupPWA();
+        });
+
+        function initGallery() {
+            const gallery = document.getElementById('bg-gallery');
+            bgImages.forEach((url, index) => {
+                const thumb = document.createElement('div');
+                thumb.className = `bg-thumb ${index === 0 ? 'active' : ''}`;
+                thumb.style.backgroundImage = `url(${url})`;
+                thumb.onclick = () => {
+                    currentBg = url;
+                    document.querySelectorAll('.bg-thumb').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                    updateUI();
+                };
+                gallery.appendChild(thumb);
+            });
+        }
+
+        function handleCustomBg(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                currentBg = event.target.result;
+                document.querySelectorAll('.bg-thumb').forEach(t => t.classList.remove('active'));
+                updateUI();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        let textAlign = 'center';
+
+        function setTextAlign(align) {
+            textAlign = align;
+            updateUI();
+        }
+
+        function updateUI() {
+            const text = document.getElementById('input-text').value;
+            const preview = document.getElementById('text-preview');
+            const bg = document.getElementById('canvas-bg');
+            const overlay = document.getElementById('canvas-overlay');
             
-            <!-- 3. La personnalisation du style à la fin -->
-            <div class="control-group">
-                <h3><i class="fas fa-palette"></i> 4. Personnalisez le style</h3>
-                <div class="font-controls"><label for="font-select">Police :</label><select id="font-select" onchange="updateStyle()"><option value="'Roboto', sans-serif" style="font-family:'Roboto',sans-serif">Moderne</option><option value="'Poppins', sans-serif" style="font-family:'Poppins',sans-serif">Simple</option><option value="'Lobster', cursive" style="font-family:'Lobster',cursive">Élégante</option><option value="'Pacifico', cursive" style="font-family:'Pacifico',cursive">Manuscrite</option><option value="'Caveat', cursive" style="font-family:'Caveat',cursive">Cahier</option><option value="'Oswald', sans-serif" style="font-family:'Oswald',sans-serif">Serré</option><option value="'Anton', sans-serif" style="font-family:'Anton',sans-serif">Impact</option><option value="'Bebas Neue', sans-serif" style="font-family:'Bebas Neue',sans-serif">Titre</option></select></div><br><div class="color-controls"><label for="text-color">Couleur :</label><input type="color" id="text-color" value="#FFFFFF" oninput="updateStyle()"></div><br><div class="size-controls"><label for="font-size">Taille :</label><input type="range" id="font-size" min="14" max="70" value="28" oninput="updateStyle()"><span id="font-size-label">28</span></div>
-            </div>
-        </div>
-    </div>
+            // Texte
+            preview.innerText = text || "Votre message apparaîtra ici...";
+            preview.style.fontFamily = document.getElementById('font-family').value;
+            preview.style.color = document.getElementById('text-color').value;
+            preview.style.textAlign = textAlign;
+            
+            const fontSize = document.getElementById('font-size').value;
+            preview.style.fontSize = fontSize + 'px';
+            document.getElementById('size-val').innerText = fontSize + 'px';
 
-<script>
-    // Tout le JavaScript reste identique, il n'y a pas besoin de le changer.
-    // Logique du bouton d'installation (ne change pas)
-    let deferredPrompt;const installButton=document.getElementById("install-button");window.addEventListener("beforeinstallprompt",e=>{e.preventDefault(),deferredPrompt=e,installButton.style.display="flex",installButton.onclick=()=>{deferredPrompt.prompt()}}),window.addEventListener("appinstalled",()=>{installButton.style.display="none",deferredPrompt=null});
-    // Enregistrement du Service Worker (ne change pas)
-    "serviceWorker"in navigator&&navigator.serviceWorker.register("/Statut-Pro/sw.js").then(()=>console.log("Service Worker enregistré."));
-    // MISE À JOUR DE LA FONCTION takeShot
-    async function takeShot(e){const t=document.getElementById("canvas-box"),o=await html2canvas(t,{useCORS:!0,allowTaint:!0,scale:2});if("download"===e){const n=document.createElement("a");n.download="statut-pro-rdc.png",n.href=o.toDataURL("image/png"),n.click()}else if("share"===e){const a=document.getElementById("input-link").value,l={files:[],title:"Mon Statut Pro",text:""};const c=await new Promise(e=>o.toBlob(e,"image/png"));if(l.files.push(new File([c],"statut-pro-rdc.png",{type:"image/png"})),a&&navigator.clipboard)try{await navigator.clipboard.writeText(a),l.text="Lien copié dans le presse-papiers ! Collez-le dans la légende."}catch(s){console.error("Erreur de copie du lien: ",s),l.text="Créé avec Statut Pro RDC"}else l.text="Créé avec Statut Pro RDC";try{await navigator.share(l)}catch(i){console.error("Erreur de partage: ",i),alert("Le partage a échoué. Votre navigateur n'est peut-être pas compatible.")}}}
-    // Le reste du code de l'application (ne change pas)
-    const backgroundImages=["https://images.unsplash.com/photo-1554141323-c35a12545119?q=80&w=800&auto=format&fit=crop","https://images.unsplash.com/photo-1500964757637-c85e8a162699?q=80&w=800&auto=format&fit=crop","https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop","https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=800&auto=format&fit=crop","https://images.unsplash.com/photo-1588392382834-a891154bca4d?q=80&w=800&auto=format&fit=crop","https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=800&auto=format&fit=crop","https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop","https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=800&auto=format&fit=crop"];document.addEventListener("DOMContentLoaded",()=>{populateGallery();updateStyle()});function populateGallery(){const e=document.getElementById("gallery");backgroundImages.forEach((t,o)=>{const n=document.createElement("div");n.className="thumb",n.style.backgroundImage=`url(${t})`,0===o&&n.classList.add("active"),n.onclick=()=>{document.getElementById("canvas-box").style.backgroundImage=`url(${t})`,document.querySelectorAll(".thumb").forEach(e=>e.classList.remove("active")),n.classList.add("active")},e.appendChild(n)})}function updateText(){const e=document.getElementById("input-text").value;document.getElementById("text-preview").innerText=e||"Votre message ici..."}function updateStyle(){const e=document.getElementById("text-preview");e.style.fontFamily=document.getElementById("font-select").value,e.style.color=document.getElementById("text-color").value;const t=document.getElementById("font-size").value;e.style.fontSize=`${t}px`,document.getElementById("font-size-label").innerText=t}function previewImage(e){const t=e.target.files[0];if(!t)return;const o=new FileReader;o.onload=e=>{document.getElementById("canvas-box").style.backgroundImage=`url(${e.target.result})`,document.querySelectorAll(".thumb").forEach(e=>e.classList.remove("active"))},o.readAsDataURL(t)}
-</script>
-    <!-- Le script publicitaire est bien conservé ici -->
+            // Background & Overlay
+            bg.style.backgroundImage = `url(${currentBg})`;
+            const opacity = document.getElementById('overlay-opacity').value;
+            overlay.style.background = `rgba(0,0,0,${opacity/100})`;
+        }
+
+        async function exportImage(mode) {
+            const wrapper = document.getElementById('canvas-wrapper');
+            const canvas = await html2canvas(wrapper, {
+                useCORS: true,
+                scale: 2,
+                backgroundColor: null
+            });
+
+            if (mode === 'download') {
+                const link = document.createElement('a');
+                link.download = 'StatutPro-RDC.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } else if (mode === 'share') {
+                const linkVal = document.getElementById('input-link').value;
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                const file = new File([blob], 'statut-pro.png', { type: 'image/png' });
+                
+                const shareData = {
+                    files: [file],
+                    title: 'Mon Statut Pro',
+                    text: linkVal ? `Lien: ${linkVal}` : 'Créé avec Statut Pro RDC'
+                };
+
+                if (navigator.canShare && navigator.canShare(shareData)) {
+                    try {
+                        await navigator.share(shareData);
+                    } catch (err) {
+                        console.log('Erreur de partage:', err);
+                    }
+                } else {
+                    alert("Le partage n'est pas supporté sur ce navigateur. Téléchargez l'image à la place.");
+                }
+            }
+        }
+
+        // PWA Logic
+        function setupPWA() {
+            let deferredPrompt;
+            const installBtn = document.getElementById('install-btn');
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                installBtn.style.display = 'flex';
+            });
+
+            installBtn.addEventListener('click', () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choice) => {
+                        if (choice.outcome === 'accepted') {
+                            installBtn.style.display = 'none';
+                        }
+                        deferredPrompt = null;
+                    });
+                }
+            });
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js')
+                    .then(() => console.log("Service Worker Active"));
+            }
+        }
+    </script>
+    
+    <!-- Script publicitaire conservé -->
     <script src="https://pl28725493.effectivegatecpm.com/92/24/15/922415557c0b2e238f75d831946ca7cc.js"></script>
 </body>
 </html>
